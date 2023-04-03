@@ -6,8 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 class HomeView(APIView):
     
-    permission_classes = (IsAuthenticated, )
-    
+    # permission_classes = (IsAuthenticated, ) -- can use to block requests
     def get(self, request):
         content = {
             'message': 'Welcome to the JWT Authentication page with Django + React!'
@@ -17,7 +16,7 @@ class HomeView(APIView):
 
 class LogoutView(APIView):
     
-    permission_classes = (IsAuthenticated, )
+    # permission_classes = (IsAuthenticated, )
     
     def post(self, request):
         print(request.data)
