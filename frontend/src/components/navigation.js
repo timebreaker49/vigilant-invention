@@ -22,7 +22,13 @@ export function Navigation() {
             </Nav>
             <Nav>
                 {isAuth ? <Nav.Link href="/logout">Logout</Nav.Link> :  
-                    <Nav.Link href="/login">Login</Nav.Link>}
+                    <div>
+                        <Navbar>
+                            <Nav.Link href="/sign-up">Sign Up</Nav.Link>
+                            <Nav.Link href="/login">Login</Nav.Link>
+                        </Navbar>
+                    </div>
+                }
             </Nav>
         </Navbar>
        </div>
