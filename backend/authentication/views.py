@@ -1,8 +1,11 @@
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.views import APIView
 
 class HomeView(APIView):
     
@@ -29,3 +32,16 @@ class LogoutView(APIView):
         except Exception as e:
             
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+class UserProfileView(APIView):
+    
+    @csrf_exempt
+    @api_view(['POST'])
+    def create_user_profile(request):
+        user = User.objects.create_user(
+            username=request.data['username'], 
+            email=request.data['email'], 
+            password=request.data['password'])
+        user.set_password(request.data['password'])
+        user.save()
+        return Response(status=status.HTTP_201_CREATED)

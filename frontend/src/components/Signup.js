@@ -1,16 +1,33 @@
 import { useState } from "react";
+import axios from "axios";
 import './Signup.css';
 
 const Signup = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
 
     const submit = async e => {
-        e.preventDefault()
-        console.log(
-            `email: ${email}, \npassword: ${password}, \ncPassword: ${confirmPassword}`
+        e.preventDefault();
+        
+        const user = {
+            username: username,
+            email: email,
+            password: password
+        };
+
+        /** @TODO Form validation **/
+
+        const {data} = await axios.post(
+            'http://localhost:8000/signup/',
+            user, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }                 
+            }, { withCredentials: true }    
         );
+        /** @TODO Redirect on HTTP_200 **/
     }
 
     return (
@@ -18,6 +35,16 @@ const Signup = () => {
             <form className="Signup-form" onSubmit={submit}>
                 <div className="Signup-form-content">
                     <h2 className="Signup-form-title">Sign Up</h2>
+                    <div className="form-group mt-1">
+                        <label>Username</label>
+                        <input className="form-control mt-1" 
+                            placeholder="BoatyMcBoatface123" 
+                            name="username" 
+                            type="text" 
+                            value={username} 
+                            required 
+                            onChange={e => {setUsername(e.target.value)}} />
+                    </div>
                     <div className="form-group mt-1">
                         <label>Email</label>
                         <input className="form-control mt-1" 
