@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
 import './Login.css';
+import { Navigate } from "react-router-dom";
 
 export const Login = () => {
     const[username, setUsername] = useState('');
     const[password, setPassword] = useState('');
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const submit = async e => {
         e.preventDefault() ;
@@ -22,7 +24,6 @@ export const Login = () => {
                     }                 
                 }, { withCredentials: true }    
         );
-        console.log(data);
 
         localStorage.clear();
 
@@ -47,6 +48,9 @@ export const Login = () => {
 
     return(
         <div className="Auth-form-container">
+            {loggedIn && (
+                <Navigate to="/" replace={true} />
+            )}
             <form className="Auth-form" onSubmit={submit}>
                 <div className="Auth-form-content">
                     <h3 className="Auth-form-title">Sign In</h3>
