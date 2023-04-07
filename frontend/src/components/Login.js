@@ -14,24 +14,35 @@ export const Login = () => {
             password: password
         };
 
-        const {data} = await axios.post(
-            'http://localhost:8000/token/',
-            user, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }                 
-            }, { withCredentials: true }    
+        const { data } = await axios.post(
+                'http://localhost:8000/token/',
+                user, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }                 
+                }, { withCredentials: true }    
         );
         console.log(data);
 
         localStorage.clear();
 
-        localStorage.setItem('access_token', data.access);
-        localStorage.setItem('refresh_token', data.refresh);
-
-        axios.defaults.headers.common['Authorization'] = `Bearer ${data['access']}`;
-
-        window.location.href = '/'
+        if (!Object.is(data, undefined)) {
+            localStorage.setItem('access_token', data.access);
+            localStorage.setItem('refresh_token', data.refresh);
+            localStorage.setItem('username', username);
+    
+            axios.defaults.headers.common['Authorization'] = `Bearer ${data['access']}`;
+            
+            const res = await axios.post(
+                'http://localhost:8000/getuser/', 
+                { username: username }, 
+                { headers: {'Content-Type': 'application/json'}}, 
+                { withCredentials: true }
+            );
+            console.log(res);
+            
+            setLoggedIn(true);
+        }
     }
 
     return(

@@ -17,7 +17,7 @@ export const Home = () => {
                             }
                         }
                         , { withCredentials: true })
-                    setMessage(data.message);
+                    setMessage(`Welcome, ${localStorage.getItem('username')}!`);
                 } catch (e) {
                     console.log('not authorized');
                 }
