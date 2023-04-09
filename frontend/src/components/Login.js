@@ -1,12 +1,14 @@
-import axios from "axios";
+import { Navigate, useLocation } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 import './Login.css';
-import { Navigate } from "react-router-dom";
 
 export const Login = () => {
     const[username, setUsername] = useState('');
     const[password, setPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
+
+    const location = useLocation();
 
     const submit = async e => {
         e.preventDefault() ;

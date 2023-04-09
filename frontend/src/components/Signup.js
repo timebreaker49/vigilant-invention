@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import './Signup.css';
@@ -7,6 +8,7 @@ const Signup = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
+    const [shouldRedirect, setShouldRedirect] = useState(false);
 
     const submit = async e => {
         e.preventDefault();
@@ -27,11 +29,19 @@ const Signup = () => {
                 }                 
             }, { withCredentials: true }    
         );
+
+        if (data !== undefined) {setShouldRedirect(true);}
+
+        console.log('data! ', data);
         /** @TODO Redirect on HTTP_200 **/
     }
 
     return (
         <div className="Signup-form-container">
+            { shouldRedirect && 
+                <Navigate to='/login' 
+                    state={{ welcomeMessage: 'welcome' }} 
+                    replace={true}/>}
             <form className="Signup-form" onSubmit={submit}>
                 <div className="Signup-form-content">
                     <h2 className="Signup-form-title">Sign Up</h2>
