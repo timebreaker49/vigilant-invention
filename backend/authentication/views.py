@@ -1,12 +1,13 @@
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import serializers, status, viewsets
+from rest_framework import status, viewsets
 from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
-from .serializers import UserProfileSerializer, UserSerializer
+from .serializers import UserProfileSerializer
+from .models import UserProfile
+from .activation_view import ActivationView
 
 class HomeView(APIView):
     
@@ -45,14 +46,17 @@ class UserProfileView(viewsets.ModelViewSet):
             email=request.data['email'], 
             password=request.data['password'])
         user.set_password(request.data['password'])
+        user.is_active = False
         user.save()
+        ActivationView._send_email_verification(request, user)
         return Response(status=status.HTTP_201_CREATED)
 
     @csrf_exempt
     @api_view(['POST'])
-    def get_user(request):
+    def get_user_profile(request):
         user = User.objects.get(username=request.data['username'])
-        serializer = UserSerializer(user)
-        print(serializer.data)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-        
+        profile = UserProfile.objects.get(user=user.id)
+        serializer = UserProfileSerializer(profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)    
+    
+    
