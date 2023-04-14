@@ -2,6 +2,7 @@ import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Activation } from './components/Activation';
 import { Login } from './components/Login';
 import { Logout } from './components/Logout';
 import { Home } from './components/Home';
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/sign-up" element={<Signup/>} />
         <Route path="/logout" element={<Logout/>} />
+        <Route path="/activate/*" element={<Activation/>} />
       </Routes>
     </BrowserRouter>
   );
