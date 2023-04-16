@@ -1,6 +1,7 @@
-import { Navigate, useLocation } from "react-router-dom";
-import { useState } from "react";
-import axios from "axios";
+import { Navigate, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
+import PulseLoader from 'react-spinners/PulseLoader';
 import './Login.css';
 
 export const Login = () => {

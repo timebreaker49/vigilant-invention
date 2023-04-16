@@ -33,3 +33,14 @@
     font-weight: 600;
     color: rgb(34, 34, 34);
   }
+
+  .Signup-banner {
+    margin: 1em 1em;
+    align-items: center;
+    text-align: center;
+  }
+
+  .Error-message {
+    color: red;
+    text-align: center;
+  }
