@@ -40,7 +40,7 @@ const Signup = () => {
         <div className="Signup-form-container">
             { shouldRedirect && 
                 <Navigate to='/login' 
-                    state={{ welcomeMessage: 'welcome' }} 
+                    state={{ email: email, username: username }} 
                     replace={true}/>}
             <form className="Signup-form" onSubmit={submit}>
                 <div className="Signup-form-content">
